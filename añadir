@@ -1,0 +1,112 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+class Reserva {
+    string nombreCliente;
+    string fecha;
+    string servicio;
+
+public:
+    // Constructor
+    Reserva(string nombre, string fechaReserva, string tipoServicio) 
+        : nombreCliente(nombre), fecha(fechaReserva), servicio(tipoServicio) {}
+
+    // Mostrar la información de la reserva
+    void mostrarReserva() const {
+        cout << "Cliente: " << nombreCliente << ", Fecha: " << fecha 
+             << ", Servicio: " << servicio << endl;
+    }
+
+    string getCliente() const {
+        return nombreCliente;
+    }
+};
+
+class SistemaReservas {
+    vector<Reserva> reservas;
+
+public:
+    // Agregar una reserva
+    void agregarReserva() {
+        string nombre, fecha, servicio;
+        cout << "Ingrese el nombre del cliente: ";
+        cin.ignore(); // Ignorar el salto de línea previo
+        getline(cin, nombre);
+        cout << "Ingrese la fecha de la reserva (dd/mm/aaaa): ";
+        cin >> fecha;
+        cout << "Ingrese el tipo de servicio: ";
+        cin.ignore();
+        getline(cin, servicio);
+
+        Reserva nuevaReserva(nombre, fecha, servicio);
+        reservas.push_back(nuevaReserva);
+
+        cout << "Reserva agregada exitosamente.\n";
+    }
+
+    // Mostrar todas las reservas
+    void mostrarReservas() const {
+        if (reservas.empty()) {
+            cout << "No hay reservas registradas.\n";
+            return;
+        }
+        cout << "Listado de reservas:\n";
+        for (const auto& reserva : reservas) {
+            reserva.mostrarReserva();
+        }
+    }
+
+    // Cancelar una reserva por nombre
+    void cancelarReserva() {
+        string nombre;
+        cout << "Ingrese el nombre del cliente para cancelar la reserva: ";
+        cin.ignore();
+        getline(cin, nombre);
+
+        for (auto it = reservas.begin(); it != reservas.end(); ++it) {
+            if (it->getCliente() == nombre) {
+                reservas.erase(it);
+                cout << "Reserva cancelada exitosamente.\n";
+                return;
+            }
+        }
+        cout << "No se encontró una reserva con ese nombre.\n";
+    }
+};
+
+int main() {
+    SistemaReservas sistema;
+    int opcion;
+
+    do {
+        cout << "\n--- Sistema de Reservas ---\n";
+        cout << "1. Agregar Reserva\n";
+        cout << "2. Mostrar Reservas\n";
+        cout << "3. Cancelar Reserva\n";
+        cout << "4. Salir\n";
+        cout << "Seleccione una opcion: ";
+        cin >> opcion;
+
+        switch (opcion) {
+            case 1:
+                sistema.agregarReserva();
+                break;
+            case 2:
+                sistema.mostrarReservas();
+                break;
+            case 3:
+                sistema.cancelarReserva();
+                break;
+            case 4:
+                cout << "Saliendo del sistema...\n";
+                break;
+            default:
+                cout << "Opción inválida. Intente nuevamente.\n";
+        }
+    } while (opcion != 4);
+
+    return 0;
+}

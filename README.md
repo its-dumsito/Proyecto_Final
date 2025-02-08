@@ -1,6 +1,8 @@
 # Sistema de Reservas en C++
 
-Este programa en C++ permite crear y gestionar reservas para un establecimiento. El programa solicita al usuario información sobre el cliente, el número de personas, la fecha y la hora de la reserva. Luego, muestra un resumen de la reserva creada.
+Este programa en C++ permite crear y gestionar reservas para un establecimiento. 
+El programa solicita al usuario información sobre el cliente, el número de personas, la fecha y la hora de la reserva.
+Luego, muestra un resumen de la reserva creada.
 
 ## Estructura del Código
 
@@ -18,7 +20,8 @@ El código se estructura de la siguiente manera:
 
 3.  **Función `main()`:**
     *   Se declara una variable `reserva` de tipo `Reserva`.
-    *   Se solicita al usuario que ingrese los datos de la reserva: nombre del cliente, número de personas, fecha y hora.
+    *   Se solicita al usuario que ingrese los datos de la reserva: nombre del cliente,
+    *    número de personas, fecha y hora.
     *   Se muestra un mensaje de confirmación de la reserva.
     *   Se muestran los detalles de la reserva creada.
 

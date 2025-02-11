@@ -1,0 +1,151 @@
+/**
+ * @file reserva.cpp
+ * @brief Sistema de gestión de reservas que permite crear, modificar y eliminar reservaciones
+ * @author [Nombre del Autor]
+ * @date 2025-02-10
+ */
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+/**
+ * @brief Clase que representa una reserva en el sistema
+ * @details Permite gestionar los datos de una reserva incluyendo el nombre del cliente,
+ *          número de personas, fecha y hora de la reservación
+ */
+class Reserva {
+private:
+    string nombreCliente;    ///< Nombre del cliente que realiza la reserva
+    int numeroPersonas;      ///< Número de personas incluidas en la reserva
+    string fecha;            ///< Fecha de la reserva en formato dd/mm/aaaa
+    string hora;             ///< Hora de la reserva en formato hh:mm
+
+public:
+    /**
+     * @brief Constructor por defecto
+     * @details Inicializa todos los campos de la reserva con valores vacíos
+     */
+    Reserva() : nombreCliente(""), numeroPersonas(0), fecha(""), hora("") {}
+
+    /**
+     * @brief Captura los datos de la reserva desde la entrada estándar
+     * @details Solicita al usuario que ingrese el nombre del cliente, número de personas,
+     *          fecha y hora de la reserva
+     */
+    void capturarDatos() {
+        cout << "Ingrese el nombre del cliente: ";
+        cin >> nombreCliente;
+        cout << "Ingrese el número de personas: ";
+        cin >> numeroPersonas;
+        cout << "Ingrese la fecha (dd/mm/aaaa): ";
+        cin >> fecha;
+        cout << "Ingrese la hora (hh:mm): ";
+        cin >> hora;
+        cout << "\nReserva creada con éxito.\n";
+    }
+
+    /**
+     * @brief Muestra los detalles actuales de la reserva
+     * @details Imprime en pantalla el nombre del cliente, número de personas,
+     *          fecha y hora de la reserva
+     */
+    void mostrarDetalles() const {
+        cout << "\nDetalles de la reserva:\n";
+        cout << "Cliente: " << nombreCliente << endl;
+        cout << "Número de personas: " << numeroPersonas << endl;
+        cout << "Fecha: " << fecha << endl;
+        cout << "Hora: " << hora << endl;
+    }
+
+    /**
+     * @brief Verifica si la reserva contiene datos válidos
+     * @return true si todos los campos de la reserva están completos,
+     *         false si algún campo está vacío o el número de personas es 0
+     */
+    bool esReservaValida() {
+        return !nombreCliente.empty() && numeroPersonas > 0 && !fecha.empty() && !hora.empty();
+    }
+
+    /**
+     * @brief Permite modificar los datos de la reserva
+     * @details Muestra un menú con opciones para modificar cada campo de la reserva
+     *          y actualiza el campo seleccionado con el nuevo valor
+     */
+    void modificarReserva() {
+        int opcion;
+        cout << "\n¿Qué desea modificar?\n";
+        cout << "1. Nombre del cliente\n";
+        cout << "2. Número de personas\n";
+        cout << "3. Fecha\n";
+        cout << "4. Hora\n";
+        cout << "Ingrese su opción: ";
+        cin >> opcion;
+        
+        switch(opcion) {
+            case 1:
+                cout << "Ingrese el nuevo nombre del cliente: ";
+                cin >> nombreCliente;
+                break;
+            case 2:
+                cout << "Ingrese el nuevo número de personas: ";
+                cin >> numeroPersonas;
+                break;
+            case 3:
+                cout << "Ingrese la nueva fecha (dd/mm/aaaa): ";
+                cin >> fecha;
+                break;
+            case 4:
+                cout << "Ingrese la nueva hora (hh:mm): ";
+                cin >> hora;
+                break;
+            default:
+                cout << "Opción no válida.\n";
+        }
+    }
+
+    /**
+     * @brief Elimina la reserva actual
+     * @details Restablece todos los campos de la reserva a sus valores por defecto
+     */
+    void eliminarReserva() {
+        nombreCliente = "";
+        numeroPersonas = 0;
+        fecha = "";
+        hora = "";
+        cout << "\nReserva eliminada con éxito.\n";
+    }
+
+    /**
+     * @brief Consulta al usuario si desea modificar la reserva
+     * @return true si el usuario desea modificar la reserva (responde 'N' o 'n'),
+     *         false en caso contrario
+     */
+    bool deseaModificar() {
+        char respuesta;
+        cout << "\n¿Todo está correcto? (S/N): ";
+        cin >> respuesta;
+        return (respuesta == 'N' || respuesta == 'n');
+    }
+};
+
+/**
+ * @brief Función principal del programa
+ * @return 0 si el programa se ejecuta correctamente
+ * @details Crea una nueva reserva, captura sus datos y permite modificarla
+ *          hasta que el usuario esté satisfecho con los datos ingresados
+ */
+int main() {
+    Reserva reserva;
+    reserva.capturarDatos();
+    reserva.mostrarDetalles();
+
+    while (reserva.deseaModificar()) {
+        reserva.modificarReserva();
+        reserva.mostrarDetalles();
+    }
+
+    cout << "\nReserva final:\n";
+    reserva.mostrarDetalles();
+    return 0;
+}
